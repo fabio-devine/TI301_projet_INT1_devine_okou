@@ -1,11 +1,20 @@
-/* foret.h : partie 2, étapes 4 à 6 — la forêt, ses grilles d'occupation et de lumière, sa pousse (code fourni, à compléter) */
+
+/* foret.h : partie 2, étapes 4 à 6 — la forêt, ses grilles d'occupation et de lumière, sa pousse */
 
 #ifndef FORET_FORET_H
 #define FORET_FORET_H
 
-/* ---------------------------------------------------------------- à compléter : la structure t_foret, ici, avant le code fourni */
+#include "arbre_foret.h"
 
-/* ---------------------------------------------------------------- code fourni (ne compile qu'une fois t_foret écrite) */
+typedef struct s_foret {
+    int K, E, C, HMAX;
+    double A;
+    int P_max;
+    t_arbre_foret *arbres;
+    int **occupation;
+    double **lumiere;
+    int saison;
+} t_foret;
 
 /***
  * @brief colonne de la case qui contient l'abscisse x (la forêt fait le tour : modulo C)
@@ -23,6 +32,8 @@ int columnOf(t_foret *f, float x);
  */
 int rowOf(t_foret *f, float y);
 
-/* ---------------------------------------------------------------- à compléter : vos prototypes, à partir d'ici */
+t_foret createForest(int K, int E, int HMAX, double A, int P_max);
+void addToGrid(t_foret *f, t_rameau *r);
+void addTreeToGrid(t_foret *f, t_rameau *r);
 
 #endif //FORET_FORET_H
