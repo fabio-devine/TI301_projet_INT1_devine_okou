@@ -5,6 +5,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "foret.h"
+#include "alea.h"
+#include "croissance_lumiere.h"
 
 /* ---------------------------------------------------------------- code fourni */
 
@@ -93,4 +95,91 @@ double getLight(t_foret *f, t_rameau *r) {
     int ligne = rowOf(f, r->y);
     int colonne = columnOf(f, r->x);
     return f->lumiere[ligne][colonne];
+}
+
+/* ---------------------------------------------------------------- étape 6 */
+
+void plantForest(t_foret *f, int seed, int identique) {
+    for (int k = 0; k < f->K; k++) {
+        float x = k * f->E + f->E / 2.0f;
+        f->arbres[k] = createForestTree(k, x, 1.0f, seed);
+    }
+    randomInit((uint64_t) seed);
+
+    if (!identique) {
+        for (int k = 0; k < f->K; k++) {
+            float y = randomBetween(0.5, 1.5);
+            t_arbre_foret *a = &f->arbres[k];
+            a->step.arbre.pied->y = y;
+            a->step.arbre.pied->longueur = y;
+            a->cime = y;
+        }
+    }
+    for (int k = 0; k < f->K; k++) {
+        addToGrid(f, f->arbres[k].step.arbre.pied);
+    }
+}
+
+void growSeasonInForest(t_foret *f, t_arbre_foret *a) {
+    a->step.saison++;
+    if (a->tronque) {
+        return;
+    }
+
+    t_queue G = createEmptyQueue();
+
+    while (!isEmptyQueue(a->step.bourgeons)) {
+        t_rameau *b = dequeue(&a->step.bourgeons);
+        double lumiere = getLight(f, b);
+
+        if (canGrowInLight(lumiere)) {
+            int n = howManyBranchesInLight(lumiere);
+            growBudInLight(a, b, n, lumiere);
+
+            for (int i = 0; i < n; i++) {
+                t_rameau *fils = b->p_fils[i];
+                enqueue(&G, fils);
+                addToGrid(f, fils);
+            }
+        } else {
+            enqueue(&G, b);
+        }
+    }
+    a->step.bourgeons = G;
+
+    if (a->step.arbre.nb_rameaux >= f->P_max) {
+        a->tronque = 1;
+    }
+}
+
+void growForestSeason(t_foret *f) {
+    computeLight(f);
+
+    for (int k = 0; k < f->K; k++) {
+        growSeasonInForest(f, &f->arbres[k]);
+    }
+    f->saison++;
+}
+
+void simulateForest(t_foret *f, int S) {
+    for (int s = 0; s < S; s++) {
+        growForestSeason(f);
+    }
+}
+
+void freeForest(t_foret *f) {
+    for (int k = 0; k < f->K; k++) {
+        freeForestTree(&f->arbres[k]);
+    }
+    free(f->arbres);
+
+    for (int r = 0; r < f->HMAX; r++) {
+        free(f->occupation[r]);
+        free(f->lumiere[r]);
+    }
+    free(f->occupation);
+    free(f->lumiere);
+    f->arbres = NULL;
+    f->occupation = NULL;
+    f->lumiere = NULL;
 }
