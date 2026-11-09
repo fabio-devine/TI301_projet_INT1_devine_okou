@@ -29,3 +29,54 @@ int computeHeight(t_rameau *r) {
     }
     return max;
 }
+
+
+float computeTop(t_rameau *r) {
+    if (r == NULL) {
+        return 0;
+    }
+    float max = r->y;
+
+    for (int i = 0; i < r->nb_fils; i++) {
+        float y = computeTop(r->p_fils[i]);
+        if (y > max) {
+            max = y;
+        }
+    }
+    return max;
+}
+
+
+float computeXMin(t_rameau *r) {
+    if (r == NULL) {
+        return 0;
+    }
+    float min = r->x;
+
+    for (int i = 0; i < r->nb_fils; i++) {
+        float x = computeXMin(r->p_fils[i]);
+        if (x < min) {
+            min = x;
+        }
+    }
+    return min;
+}
+
+
+float computeXMax(t_rameau *r) {
+    if (r == NULL) {
+        return 0;
+    }
+    float max = r->x;
+
+    for (int i = 0; i < r->nb_fils; i++) {
+        float x = computeXMax(r->p_fils[i]);
+        if (x > max) {
+            max = x;
+        }
+    }
+    return max;
+}
+
+
+
