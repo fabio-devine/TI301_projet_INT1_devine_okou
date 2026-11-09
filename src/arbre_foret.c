@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include "croissance.h"
 #include "croissance_lumiere.h"
+float clampDirection(float dir);
 
 int countBranches(t_rameau *r) {
     if (r == NULL) {
@@ -126,30 +127,19 @@ void freeForestTree(t_arbre_foret *a) {
     a->step.arbre.pied = NULL;
 }
 
+
 void growSeason(t_arbre_foret *a, double lumiere) {
     t_queue G = createEmptyQueue();
     a->step.saison++;
+
     while (!isEmptyQueue(a->step.bourgeons)) {
         t_rameau *b = dequeue(&a->step.bourgeons);
         if (canGrowInLight(lumiere)) {
             int n = howManyBranchesInLight(lumiere);
-            growBud(&a->step.arbre, b, n, a->step.saison);
-            a->nb_bourgeons += n - 1;
+            growBudInLight(a, b, n, lumiere);
+
             for (int i = 0; i < n; i++) {
-                t_rameau *fils = b->p_fils[i];
-                enqueue(&G, fils);
-                if (fils->gen > a->hauteur) {
-                    a->hauteur = fils->gen;
-                }
-                if (fils->y > a->cime) {
-                    a->cime = fils->y;
-                }
-                if (fils->x < a->xmin) {
-                    a->xmin = fils->x;
-                }
-                if (fils->x > a->xmax) {
-                    a->xmax = fils->x;
-                }
+                enqueue(&G, b->p_fils[i]);
             }
         } else {
             enqueue(&G, b);
@@ -158,4 +148,45 @@ void growSeason(t_arbre_foret *a, double lumiere) {
     a->step.bourgeons = G;
 }
 
+
+void growBudInLight(t_arbre_foret *a, t_rameau *b, int n, double lumiere) {
+    b->p_fils = malloc(n * sizeof(t_rameau *));
+    if (b->p_fils == NULL) {
+        exit(EXIT_FAILURE);
+    }
+
+    for (int i = 0; i < n; i++) {
+        float dir;
+        float longueur;
+        if (i == 0) {
+            dir = b->dir + randomBetween(-10, 10);
+        } else {
+            int cote = randomInt(2);
+            float angle = randomBetween(30, 60);
+            if (cote == 0) {
+                dir = b->dir - angle;
+            } else {
+                dir = b->dir + angle;
+            }
+        }
+        dir = clampDirection(dir);
+        longueur = (0.5 + 0.5 * lumiere) * randomBetween(0.7, 1.3);
+        t_rameau *fils = growBranch(&a->step.arbre, b, a->step.saison, dir, longueur);
+        b->p_fils[i] = fils;
+        if (fils->gen > a->hauteur) {
+            a->hauteur = fils->gen;
+        }
+        if (fils->y > a->cime) {
+            a->cime = fils->y;
+        }
+        if (fils->x < a->xmin) {
+            a->xmin = fils->x;
+        }
+        if (fils->x > a->xmax) {
+            a->xmax = fils->x;
+        }
+    }
+    b->nb_fils = n;
+    a->nb_bourgeons += n - 1;
+}
 

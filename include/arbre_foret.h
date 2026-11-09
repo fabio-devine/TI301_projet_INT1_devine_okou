@@ -24,5 +24,7 @@ void freeBranches(t_rameau *r);
 t_arbre_foret createForestTree(int id, float x, float y, int seed);
 void freeForestTree(t_arbre_foret *a);
 void growSeason(t_arbre_foret *a, double lumiere);
+void growBudInLight(t_arbre_foret *a, t_rameau *b, int n, double lumiere);
+
 
 #endif
