@@ -53,3 +53,22 @@ int canGrowInLight(double lumiere)
 }
 
 /* ---------------------------------------------------------------- à compléter : vos fonctions, à partir d'ici */
+
+int howManyBranchesInLight(double lumiere) {
+    float pourcentages[3];
+
+    if (lumiere >= 0.7) {
+        pourcentages[0] = 70;
+        pourcentages[1] = 25;
+        pourcentages[2] = 5;
+    } else if (lumiere >= 0.4) {
+        pourcentages[0] = 85;
+        pourcentages[1] = 15;
+        pourcentages[2] = 0;
+    } else {
+        pourcentages[0] = 100;
+        pourcentages[1] = 0;
+        pourcentages[2] = 0;
+    }
+    return drawFromTable(pourcentages, 3) + 1;
+}
