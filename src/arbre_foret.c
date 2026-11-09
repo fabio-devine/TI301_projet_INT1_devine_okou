@@ -62,7 +62,6 @@ float computeXMin(t_rameau *r) {
     return min;
 }
 
-
 float computeXMax(t_rameau *r) {
     if (r == NULL) {
         return 0;
@@ -76,6 +75,53 @@ float computeXMax(t_rameau *r) {
         }
     }
     return max;
+}
+
+int countBuds(t_rameau *r) {
+    if (r == NULL) {
+        return 0;
+    }
+    if (r->nb_fils == 0) {
+        return 1;
+    }
+    int count = 0;
+
+    for (int i = 0; i < r->nb_fils; i++) {
+        count += countBuds(r->p_fils[i]);
+    }
+    return count;
+}
+
+void freeBranches(t_rameau *r) {
+    if (r == NULL) {
+        return;
+    }
+
+    for (int i = 0; i < r->nb_fils; i++) {
+        freeBranches(r->p_fils[i]);
+    }
+    free(r->p_fils);
+    free(r);
+}
+
+t_arbre_foret createForestTree(int id, float x, float y, int seed) {
+    t_arbre_foret a;
+    a.step = createTreeStep(x, y, seed);
+    a.id = id;
+    a.hauteur = 0;
+    a.cime = y;
+    a.xmin = x;
+    a.xmax = x;
+    a.nb_bourgeons = 1;
+    a.tronque = 0;
+    return a;
+}
+
+
+void freeForestTree(t_arbre_foret *a) {
+    clearBuds(&a->step);
+    freeBranches(a->step.arbre.pied);
+    a->step.arbre.pied = NULL;
 }
 
 
