@@ -36,4 +36,7 @@ t_foret createForest(int K, int E, int HMAX, double A, int P_max);
 void addToGrid(t_foret *f, t_rameau *r);
 void addTreeToGrid(t_foret *f, t_rameau *r);
 
+void computeLight(t_foret *f);
+double getLight(t_foret *f, t_rameau *r);
+
 #endif //FORET_FORET_H

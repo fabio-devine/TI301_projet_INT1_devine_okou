@@ -9,7 +9,6 @@
 /* ---------------------------------------------------------------- code fourni */
 
 int columnOf(t_foret *f, float x) {
-    // en C, -1 % 12 vaut -1 : on ramène le reste entre 0 et C - 1
     int c = (int) floorf(x) % f->C;
     if (c < 0) {
         c += f->C;
@@ -27,7 +26,7 @@ int rowOf(t_foret *f, float y) {
     return r;
 }
 
-/* ---------------------------------------------------------------- fonctions à compléter */
+/* ---------------------------------------------------------------- étape 4 */
 
 t_foret createForest(int K, int E, int HMAX, double A, int P_max) {
     t_foret f;
@@ -72,4 +71,26 @@ void addTreeToGrid(t_foret *f, t_rameau *r) {
     for (int i = 0; i < r->nb_fils; i++) {
         addTreeToGrid(f, r->p_fils[i]);
     }
+}
+
+/* ---------------------------------------------------------------- étape 5 */
+
+void computeLight(t_foret *f) {
+    for (int c = 0; c < f->C; c++) {
+        double lumiere = 1.0;
+
+        for (int r = f->HMAX - 1; r >= 0; r--) {
+            f->lumiere[r][c] = lumiere;
+
+            for (int i = 0; i < f->occupation[r][c]; i++) {
+                lumiere *= 1.0 - f->A;
+            }
+        }
+    }
+}
+
+double getLight(t_foret *f, t_rameau *r) {
+    int ligne = rowOf(f, r->y);
+    int colonne = columnOf(f, r->x);
+    return f->lumiere[ligne][colonne];
 }
