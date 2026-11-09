@@ -13,3 +13,19 @@ int countBranches(t_rameau *r) {
     }
     return count;
 }
+
+
+int computeHeight(t_rameau *r) {
+    if (r == NULL) {
+        return -1;
+    }
+    int max = r->gen;
+
+    for (int i = 0; i < r->nb_fils; i++) {
+        int h = computeHeight(r->p_fils[i]);
+        if (h > max) {
+            max = h;
+        }
+    }
+    return max;
+}
