@@ -54,6 +54,33 @@ int main(void)
     //    pour 100 graines, 20 saisons, avec L = 1 puis L = 0,5 : après chaque saison, les mesures tenues à jour
     //    sont exactement celles des fonctions récursives, la hauteur ne dépasse pas le numéro de la saison
     //    et elle augmente d'au plus 1 ; affichez le nombre de problèmes trouvés (attendu : 0)
+    int problemes = 0;
+
+    for (int j = 0; j < 2; j++) {
+        for (int graine = 1; graine <= 100; graine++) {
+            a = createForestTree(0, 0, 1, graine);
+            int ancienneHauteur = a.hauteur;
+
+            for (int s = 0; s < 20; s++) {
+                growSeason(&a, L[j]);
+                t_rameau *p = a.step.arbre.pied;
+                if (a.step.arbre.nb_rameaux != countBranches(p) ||
+                    a.hauteur != computeHeight(p) ||
+                    a.cime != computeTop(p) ||
+                    a.xmin != computeXMin(p) ||
+                    a.xmax != computeXMax(p) ||
+                    a.nb_bourgeons != countBuds(p) ||
+                    a.hauteur > a.step.saison ||
+                    a.hauteur < ancienneHauteur ||
+                    a.hauteur > ancienneHauteur + 1) {
+                    problemes++;
+                    }
+                ancienneHauteur = a.hauteur;
+            }
+            freeForestTree(&a);
+        }
+    }
+    printf("Validation des mesures : %d probleme(s) (attendu : 0)\n", problemes);
 
     // 3. graine 1, 20 saisons
     for (int j = 0; j < 2; j++)

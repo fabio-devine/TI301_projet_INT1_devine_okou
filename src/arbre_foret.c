@@ -2,6 +2,8 @@
 
 #include "arbre_foret.h"
 #include <stdlib.h>
+#include "croissance.h"
+#include "croissance_lumiere.h"
 
 int countBranches(t_rameau *r) {
     if (r == NULL) {
@@ -124,5 +126,36 @@ void freeForestTree(t_arbre_foret *a) {
     a->step.arbre.pied = NULL;
 }
 
+void growSeason(t_arbre_foret *a, double lumiere) {
+    t_queue G = createEmptyQueue();
+    a->step.saison++;
+    while (!isEmptyQueue(a->step.bourgeons)) {
+        t_rameau *b = dequeue(&a->step.bourgeons);
+        if (canGrowInLight(lumiere)) {
+            int n = howManyBranchesInLight(lumiere);
+            growBud(&a->step.arbre, b, n, a->step.saison);
+            a->nb_bourgeons += n - 1;
+            for (int i = 0; i < n; i++) {
+                t_rameau *fils = b->p_fils[i];
+                enqueue(&G, fils);
+                if (fils->gen > a->hauteur) {
+                    a->hauteur = fils->gen;
+                }
+                if (fils->y > a->cime) {
+                    a->cime = fils->y;
+                }
+                if (fils->x < a->xmin) {
+                    a->xmin = fils->x;
+                }
+                if (fils->x > a->xmax) {
+                    a->xmax = fils->x;
+                }
+            }
+        } else {
+            enqueue(&G, b);
+        }
+    }
+    a->step.bourgeons = G;
+}
 
 
