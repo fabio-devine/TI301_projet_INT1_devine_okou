@@ -1,235 +1,247 @@
+# Tree and Forest Growth Simulator
 
-#  Tree Growth Simulator — C
+**Data Structures and Algorithms — Efrei Paris**
 
-### Data Structures & Algorithms Project | Efrei Paris
+This project was developed in C as part of the TI301 Data Structures and Algorithms course at Efrei Paris.
 
-A tree growth simulator developed in **C**, designed to model the evolution of a tree through multiple seasons using probabilistic branching and dynamic data structures.
+The goal is to simulate the growth of trees over several seasons, starting with a single tree and eventually extending the simulation to a forest where trees compete for sunlight.
 
-This academic project explores fundamental computer science concepts such as **pointers, recursion, linked structures, queues, memory management, and graph traversal algorithms**.
+The project focuses on the use of dynamic data structures, pointers, recursion, queues, and probabilistic algorithms.
 
-Developed as part of the **TI301 — Data Structures & Algorithms** course at Efrei Paris.
+## Project Description
 
----
+The project is divided into two parts.
 
-##  Project Overview
+### Part 1 — Tree Growth
 
-The objective of this project is to simulate the growth of a tree over several seasons.
+The first part focuses on the growth of an individual tree.
 
-Starting from an initial structure, the program progressively generates new branches and buds according to predefined growth rules and probabilities.
+Each tree is represented by a dynamic structure of connected branches. At every season, its buds may produce new branches according to predefined probabilities.
 
-The simulation models the evolution of the tree while demonstrating how dynamic data structures can represent complex hierarchical systems.
+The main functionalities include:
 
-The project also implements algorithms to traverse and save the resulting tree structure.
+- Creating and managing a tree using dynamically allocated structures.
+- Generating new branches with randomized directions and lengths.
+- Simulating growth over multiple seasons.
+- Managing active buds using FIFO queues.
+- Simulating growth one season at a time.
+- Traversing trees using Breadth-First Search (BFS).
+- Saving generated trees to text files.
 
----
+The queue-based implementation makes it possible to process buds in their order of appearance without traversing the entire tree at every season.
 
-##  Features
+### Part 2 — Forest Simulation
 
-###  1. Tree Growth Simulation
-- Generate a tree using dynamic data structures.
-- Simulate the development of new branches and buds.
-- Apply probabilistic rules to determine branch growth.
-- Manage tree evolution over multiple seasons.
+The second part extends the simulation to multiple trees growing in the same environment.
 
-###  2. Step-by-Step Growth
-- Simulate tree growth one season at a time.
-- Track the evolution of buds and branches.
-- Use a queue to manage active buds.
-- Compare incremental growth with complete simulations.
+Unlike the first part, tree growth now depends on the sunlight available at each bud's position.
 
-###  3. Tree Data Structures
-- Represent branches using linked nodes.
-- Manage parent-child relationships.
-- Dynamically allocate memory for new branches.
-- Navigate hierarchical tree structures.
+The main functionalities include:
 
-###  4. Breadth-First Search (BFS)
-- Traverse the tree using a queue.
-- Explore nodes level by level.
-- Process branches in breadth-first order.
-- Apply BFS to serialize tree structures.
+- Calculating tree measurements such as height, maximum altitude, horizontal extension, and number of buds.
+- Adjusting growth probabilities according to light intensity.
+- Reducing branch lengths when sunlight is limited.
+- Representing the forest with dynamically allocated 2D grids.
+- Tracking the position of branches in an occupancy grid.
+- Computing sunlight levels based on the branches located above each cell.
+- Simulating several trees growing simultaneously.
+- Limiting tree growth when a maximum number of branches is reached.
+- Saving complete forest simulations to text files.
 
-###  5. Tree Serialization
-- Save a generated tree to a text file.
-- Preserve the information required to reconstruct the tree.
-- Use breadth-first traversal to maintain the expected node order.
+The forest is simulated season by season. Sunlight is calculated first, and each tree then grows according to the light received by its buds.
 
----
+This approach makes it possible to observe how trees influence one another's development.
 
-## 🛠️ Technologies Used
+## Growth Model
 
-| Technology | Purpose |
-|------------|---------|
-| C | Main programming language |
-| CLion | Development environment |
-| CMake | Project configuration and build |
-| Git | Version control |
-| GitHub | Collaboration and source code hosting |
+### Branch Generation
 
-### Programming Concepts
+When a bud grows, it can generate one, two, or three new branches.
 
-- Pointers and dynamic memory allocation
-- Structures (`struct`)
-- Linked data structures
-- Trees and hierarchical relationships
-- Queues (FIFO)
-- Breadth-First Search (BFS)
-- Recursion
-- Randomized algorithms
-- File handling and serialization
-- Modular programming
+In full sunlight, the probabilities are:
 
----
+| Number of branches | Probability |
+|--------------------|-------------|
+| 1 | 70% |
+| 2 | 25% |
+| 3 | 5% |
 
-##  Main Algorithms
+The direction and length of each new branch are also determined using random values.
 
-### Tree Growth — `growTree()`
+### Light-Dependent Growth
 
-Simulates the evolution of a tree over multiple seasons.
+In the forest simulation, the probability of growth depends on the light received by each bud.
 
-The function manages the creation of branches and the overall development of the tree based on growth rules.
+| Light intensity | Growth probability |
+|-----------------|-------------------|
+| L >= 0.7 | 95% |
+| 0.4 <= L < 0.7 | 70% |
+| 0.15 <= L < 0.4 | 40% |
+| L < 0.15 | 0% |
 
-### Bud Development — `growBud()`
+Branch length is adjusted using the following formula:
 
-Handles the evolution of an individual bud and determines its development according to the simulation parameters.
+`length = (0.5 + 0.5 * L) * u`
 
-### Seasonal Growth — `growTreeStep()`
+Where `L` is the available light and `u` is a random value between 0.7 and 1.3.
 
-Performs one growth iteration, corresponding to a single season.
+### Sunlight Calculation
 
-This approach allows the simulation to advance progressively while managing buds through a queue.
+The forest is represented by two grids:
 
-### Tree Saving — `saveTree()`
+- An occupancy grid that stores the number of branch tips in each cell.
+- A light grid that stores the amount of sunlight available in each cell.
 
-Saves the generated tree into a text file.
+Sunlight is calculated from the top of each column to the bottom.
 
-The function uses a **Breadth-First Search (BFS)** algorithm, ensuring that branches are processed level by level.
+Each branch tip blocks a proportion of the light passing through its cell. The light received by a cell depends on the number of branch tips located in the rows above it.
 
----
+This allows the simulation to model the effect of shading between trees.
 
-##  Breadth-First Search (BFS)
+## Main Data Structures and Algorithms
 
-One of the key algorithms implemented in this project is Breadth-First Search.
+The project uses several data structures and algorithms covered during the course.
 
-Unlike Depth-First Search (DFS), BFS explores all nodes at the current depth before moving to the next level.
+**Dynamic trees:** Each branch is represented by a structure containing its position, direction, length, and pointers to its children.
 
-The algorithm relies on a **FIFO queue**.
+**Queues:** FIFO queues are used to manage active buds and perform breadth-first traversals.
 
-### Algorithm
+**Recursion:** Recursive functions calculate tree measurements and free dynamically allocated branches.
 
-1. Insert the root node into the queue.
-2. Remove the first node from the queue.
-3. Process the current node.
-4. Insert its children into the queue.
-5. Repeat until the queue is empty.
+**Breadth-First Search:** BFS is used to save tree structures in the expected order.
 
-**Time complexity:** O(n), where n is the number of nodes.
+**Dynamic 2D arrays:** The forest uses dynamically allocated grids to store occupancy and sunlight information.
 
-This algorithm is used to save the tree in the correct order.
+**Randomized algorithms:** A seeded pseudo-random generator determines growth decisions and ensures that simulations can be reproduced.
 
----
+## Project Structure
 
-##  Project Structure
+The main implementation files are located in the `src/` and `include/` directories.
 
-The project is organized into C source files and header files.
+### Part 1
 
-The main components cover:
+| File | Purpose |
+|------|---------|
+| `arbre.c` | Tree and branch creation |
+| `croissance.c` | Branch generation and tree growth |
+| `croissance_step.c` | Season-by-season growth |
+| `queue.c` | Queue implementation |
+| `sauver_arbre.c` | Tree serialization using BFS |
 
-- Tree structures and branch management
-- Growth algorithms
-- Queue implementation
-- Tree traversal
-- File saving
-- Simulation execution
+### Part 2
 
-The project uses CMake to manage compilation.
+| File | Purpose |
+|------|---------|
+| `arbre_foret.c` | Tree measurements and light-dependent branch growth |
+| `croissance_lumiere.c` | Growth probabilities according to light intensity |
+| `foret.c` | Forest creation, occupancy grids, light calculation, and simulation |
+| `sauver_foret.c` | Forest serialization |
 
----
+Additional files provide test programs, reference trees, random number generation, and visualization utilities.
 
-##  Installation & Execution
+## Installation and Execution
 
-### Prerequisites
+### Requirements
 
-- A C compiler (GCC or Clang)
-- CMake
-- CLion (recommended)
+- A C compiler supporting C11
+- CMake 3.10 or later
+- CLion or another compatible IDE (optional)
 
-### Clone the Repository
+### Clone the repository
 
 ```bash
 git clone https://github.com/fabio-devine/TI301_projet_INT1_devine_okou.git
+cd TI301_projet_INT1_devine_okou
 ```
 
-### Open in CLion
-
-1. Launch CLion.
-2. Select **Open**.
-3. Select the cloned project folder.
-4. Load the CMake configuration.
-5. Build the project.
-6. Select the appropriate executable target and run it.
-
-Alternatively, if CMake is configured at the repository root:
+### Build the project
 
 ```bash
 cmake -S . -B build
 cmake --build build
 ```
 
-Run the appropriate executable generated by CMake.
+The project provides several executable targets corresponding to the different development stages.
 
----
+For example, to build the final forest simulation test:
 
-##  Learning Outcomes
+```bash
+cmake --build build --target p2_etape_6
+```
 
-This project strengthened our understanding of fundamental data structures and algorithms in C.
+Run the executable from the project root directory so that relative paths such as `data/` and `output/` work correctly.
 
-### Technical Skills
+In CLion, select the desired CMake target and run it.
 
-- Implementing dynamic tree structures.
-- Manipulating pointers and dynamically allocated memory.
-- Designing queue-based algorithms.
-- Understanding recursive and iterative approaches.
-- Implementing BFS traversal.
-- Managing structured data through file operations.
-- Organizing a C project into reusable modules.
-- Building and debugging applications with CLion and CMake.
+## Testing and Validation
 
-### Teamwork Skills
+The project includes test programs for the different stages of development.
 
-- Collaborating on a shared codebase.
-- Using Git and GitHub for version control.
-- Integrating different components.
-- Testing and debugging algorithms.
-- Organizing development tasks.
+The tests cover:
 
----
+- Growth probabilities and random draws.
+- Tree measurements and recursive calculations.
+- Consistency between full and incremental growth.
+- Tree growth under different light conditions.
+- Occupancy grid calculations.
+- Sunlight distribution.
+- Forest reproducibility with fixed random seeds.
+- Serialization of generated trees and forests.
 
-##  Authors
+### Forest Simulation Results
 
-**Victor OKOU**
-- Student at Efrei Paris
-- [GitHub Profile](https://github.com/VictorOKOU)
+One of the final tests simulates a forest with the following parameters:
 
-**Fabio Devine**
-- Student at Efrei Paris
-- [GitHub Profile](https://github.com/fabio-devine)
+| Parameter | Value |
+|-----------|-------|
+| Number of trees | 24 |
+| Tree spacing | 3 |
+| Light absorption | 0.25 |
+| Number of seasons | 32 |
+| Random seed | 1 |
 
-Developed as part of a collaborative academic project.
+The simulation produces **6,809 branches**.
 
----
+Some results from this simulation:
 
-##  Academic Context
+| Measurement | Tree 0 | Tree 7 |
+|-------------|--------|--------|
+| Number of branches | 352 | 17 |
+| Height | 32 | 8 |
+| Maximum altitude | 33.009 | — |
+| Horizontal extension | 17.479 | 3.941 |
+| Number of buds | 87 | — |
+
+The validation tests reported no inconsistencies in tree measurements or occupancy grids across ten simulated forests.
+
+Simulations using the same parameters and random seed also produced identical tree structures.
+
+The generated forest file matches the reference data apart from two branch-direction values differing by 0.01 degrees due to floating-point rounding.
+
+## Technologies
+
+- **C (C11)** — Implementation
+- **CMake** — Build configuration
+- **CLion** — Development and debugging
+- **Git and GitHub** — Version control and collaboration
+
+## Authors
+
+**Victor OKOU**  
+Efrei Paris  
+[GitHub](https://github.com/VictorOKOU)
+
+**Fabio Devine**  
+Efrei Paris  
+[GitHub](https://github.com/fabio-devine)
+
+This project was completed as part of the TI301 coursework at Efrei Paris, using the project specifications and starter files provided by the course.
+
+## Academic Context
 
 **Institution:** Efrei Paris  
-**Course:** TI301 — Data Structures & Algorithms  
-**Language:** C  
-**Project Type:** Academic group project
+**Course:** TI301 — Data Structures and Algorithms  
+**Programming language:** C  
+**Project:** Tree and Forest Growth Simulation
 
----
-
-##  License
-
-This project was developed for educational purposes.
-
-No open-source license has been specified. All rights remain with their respective owners.
+Project instructions: [Efrei TI301 — Part 1](https://nicolas-flasque-efrei.github.io/TI-301/projet/FR/) | [Part 2](https://nicolas-flasque-efrei.github.io/TI-301/projet/partie2/EN/)
