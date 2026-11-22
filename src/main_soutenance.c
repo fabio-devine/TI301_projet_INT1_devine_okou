@@ -25,4 +25,5 @@ int main(void) {
 
     freeForest(&f);
     return 0;
+
 }
