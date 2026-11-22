@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="520" viewBox="0 0 900 520" font-family="sans-serif" font-size="13">
+<rect width="100%" height="100%" fill="white"/>
+<text x="450" y="32" text-anchor="middle" font-size="18" font-weight="bold">cime</text>
+<line x1="80" y1="440.0" x2="870.0" y2="440.0" stroke="#DDDDDD"/>
+<text x="72" y="444.0" text-anchor="end">0</text>
+<line x1="80" y1="364.0" x2="870.0" y2="364.0" stroke="#DDDDDD"/>
+<text x="72" y="368.0" text-anchor="end">453</text>
+<line x1="80" y1="288.0" x2="870.0" y2="288.0" stroke="#DDDDDD"/>
+<text x="72" y="292.0" text-anchor="end">906</text>
+<line x1="80" y1="212.0" x2="870.0" y2="212.0" stroke="#DDDDDD"/>
+<text x="72" y="216.0" text-anchor="end">1359</text>
+<line x1="80" y1="136.0" x2="870.0" y2="136.0" stroke="#DDDDDD"/>
+<text x="72" y="140.0" text-anchor="end">1812</text>
+<line x1="80" y1="60.0" x2="870.0" y2="60.0" stroke="#DDDDDD"/>
+<text x="72" y="64.0" text-anchor="end">2265</text>
+<rect x="80.0" y="395.7" width="32.9" height="44.3" fill="#4C8C5A" stroke="white"/>
+<rect x="112.9" y="188.5" width="32.9" height="251.5" fill="#4C8C5A" stroke="white"/>
+<rect x="145.8" y="61.5" width="32.9" height="378.5" fill="#4C8C5A" stroke="white"/>
+<rect x="178.8" y="92.4" width="32.9" height="347.6" fill="#4C8C5A" stroke="white"/>
+<rect x="211.7" y="155.1" width="32.9" height="284.9" fill="#4C8C5A" stroke="white"/>
+<rect x="244.6" y="215.9" width="32.9" height="224.1" fill="#4C8C5A" stroke="white"/>
+<rect x="277.5" y="258.5" width="32.9" height="181.5" fill="#4C8C5A" stroke="white"/>
+<rect x="310.4" y="280.8" width="32.9" height="159.2" fill="#4C8C5A" stroke="white"/>
+<rect x="343.3" y="311.7" width="32.9" height="128.3" fill="#4C8C5A" stroke="white"/>
+<rect x="376.2" y="326.1" width="32.9" height="113.9" fill="#4C8C5A" stroke="white"/>
+<rect x="409.2" y="351.6" width="32.9" height="88.4" fill="#4C8C5A" stroke="white"/>
+<rect x="442.1" y="356.5" width="32.9" height="83.5" fill="#4C8C5A" stroke="white"/>
+<rect x="475.0" y="372.9" width="32.9" height="67.1" fill="#4C8C5A" stroke="white"/>
+<rect x="507.9" y="383.3" width="32.9" height="56.7" fill="#4C8C5A" stroke="white"/>
+<rect x="540.8" y="393.0" width="32.9" height="47.0" fill="#4C8C5A" stroke="white"/>
+<rect x="573.8" y="392.5" width="32.9" height="47.5" fill="#4C8C5A" stroke="white"/>
+<rect x="606.7" y="398.4" width="32.9" height="41.6" fill="#4C8C5A" stroke="white"/>
+<rect x="639.6" y="402.8" width="32.9" height="37.2" fill="#4C8C5A" stroke="white"/>
+<rect x="672.5" y="405.9" width="32.9" height="34.1" fill="#4C8C5A" stroke="white"/>
+<rect x="705.4" y="412.8" width="32.9" height="27.2" fill="#4C8C5A" stroke="white"/>
+<rect x="738.3" y="409.6" width="32.9" height="30.4" fill="#4C8C5A" stroke="white"/>
+<rect x="771.2" y="415.3" width="32.9" height="24.7" fill="#4C8C5A" stroke="white"/>
+<rect x="804.2" y="163.8" width="32.9" height="276.2" fill="#4C8C5A" stroke="white"/>
+<rect x="837.1" y="60.0" width="32.9" height="380.0" fill="#4C8C5A" stroke="white"/>
+<line x1="80" y1="440.0" x2="870.0" y2="440.0" stroke="black"/>
+<line x1="80.0" y1="440.0" x2="80.0" y2="446.0" stroke="black"/>
+<text x="80.0" y="462.0" text-anchor="middle">2.71</text>
+<line x1="178.8" y1="440.0" x2="178.8" y2="446.0" stroke="black"/>
+<text x="178.8" y="462.0" text-anchor="middle">18.03</text>
+<line x1="277.5" y1="440.0" x2="277.5" y2="446.0" stroke="black"/>
+<text x="277.5" y="462.0" text-anchor="middle">33.35</text>
+<line x1="376.2" y1="440.0" x2="376.2" y2="446.0" stroke="black"/>
+<text x="376.2" y="462.0" text-anchor="middle">48.67</text>
+<line x1="475.0" y1="440.0" x2="475.0" y2="446.0" stroke="black"/>
+<text x="475.0" y="462.0" text-anchor="middle">63.99</text>
+<line x1="573.8" y1="440.0" x2="573.8" y2="446.0" stroke="black"/>
+<text x="573.8" y="462.0" text-anchor="middle">79.31</text>
+<line x1="672.5" y1="440.0" x2="672.5" y2="446.0" stroke="black"/>
+<text x="672.5" y="462.0" text-anchor="middle">94.63</text>
+<line x1="771.2" y1="440.0" x2="771.2" y2="446.0" stroke="black"/>
+<text x="771.2" y="462.0" text-anchor="middle">109.95</text>
+<line x1="870.0" y1="440.0" x2="870.0" y2="446.0" stroke="black"/>
+<text x="870.0" y="462.0" text-anchor="middle">125.27</text>
+<text x="450" y="500" text-anchor="middle" fill="#555555">24 classes de largeur 5.107</text>
+</svg>

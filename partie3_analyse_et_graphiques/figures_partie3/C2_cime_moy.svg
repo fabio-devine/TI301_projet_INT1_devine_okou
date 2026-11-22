@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="520" viewBox="0 0 900 520" font-family="sans-serif" font-size="13">
+<rect width="100%" height="100%" fill="white"/>
+<text x="450" y="32" text-anchor="middle" font-size="18" font-weight="bold">cime_moy</text>
+<line x1="80" y1="440.0" x2="870.0" y2="440.0" stroke="#DDDDDD"/>
+<text x="72" y="444.0" text-anchor="end">0</text>
+<line x1="80" y1="364.0" x2="870.0" y2="364.0" stroke="#DDDDDD"/>
+<text x="72" y="368.0" text-anchor="end">13</text>
+<line x1="80" y1="288.0" x2="870.0" y2="288.0" stroke="#DDDDDD"/>
+<text x="72" y="292.0" text-anchor="end">27</text>
+<line x1="80" y1="212.0" x2="870.0" y2="212.0" stroke="#DDDDDD"/>
+<text x="72" y="216.0" text-anchor="end">40</text>
+<line x1="80" y1="136.0" x2="870.0" y2="136.0" stroke="#DDDDDD"/>
+<text x="72" y="140.0" text-anchor="end">54</text>
+<line x1="80" y1="60.0" x2="870.0" y2="60.0" stroke="#DDDDDD"/>
+<text x="72" y="64.0" text-anchor="end">67</text>
+<rect x="80.0" y="428.7" width="39.5" height="11.3" fill="#4C8C5A" stroke="white"/>
+<rect x="119.5" y="434.3" width="39.5" height="5.7" fill="#4C8C5A" stroke="white"/>
+<rect x="159.0" y="389.0" width="39.5" height="51.0" fill="#4C8C5A" stroke="white"/>
+<rect x="198.5" y="366.3" width="39.5" height="73.7" fill="#4C8C5A" stroke="white"/>
+<rect x="238.0" y="320.9" width="39.5" height="119.1" fill="#4C8C5A" stroke="white"/>
+<rect x="277.5" y="213.1" width="39.5" height="226.9" fill="#4C8C5A" stroke="white"/>
+<rect x="317.0" y="196.1" width="39.5" height="243.9" fill="#4C8C5A" stroke="white"/>
+<rect x="356.5" y="184.8" width="39.5" height="255.2" fill="#4C8C5A" stroke="white"/>
+<rect x="396.0" y="60.0" width="39.5" height="380.0" fill="#4C8C5A" stroke="white"/>
+<rect x="435.5" y="230.1" width="39.5" height="209.9" fill="#4C8C5A" stroke="white"/>
+<rect x="475.0" y="207.5" width="39.5" height="232.5" fill="#4C8C5A" stroke="white"/>
+<rect x="514.5" y="292.5" width="39.5" height="147.5" fill="#4C8C5A" stroke="white"/>
+<rect x="554.0" y="315.2" width="39.5" height="124.8" fill="#4C8C5A" stroke="white"/>
+<rect x="593.5" y="343.6" width="39.5" height="96.4" fill="#4C8C5A" stroke="white"/>
+<rect x="633.0" y="377.6" width="39.5" height="62.4" fill="#4C8C5A" stroke="white"/>
+<rect x="672.5" y="434.3" width="39.5" height="5.7" fill="#4C8C5A" stroke="white"/>
+<rect x="712.0" y="434.3" width="39.5" height="5.7" fill="#4C8C5A" stroke="white"/>
+<rect x="751.5" y="434.3" width="39.5" height="5.7" fill="#4C8C5A" stroke="white"/>
+<rect x="791.0" y="434.3" width="39.5" height="5.7" fill="#4C8C5A" stroke="white"/>
+<rect x="830.5" y="434.3" width="39.5" height="5.7" fill="#4C8C5A" stroke="white"/>
+<line x1="80" y1="440.0" x2="870.0" y2="440.0" stroke="black"/>
+<line x1="80.0" y1="440.0" x2="80.0" y2="446.0" stroke="black"/>
+<text x="80.0" y="462.0" text-anchor="middle">44.79</text>
+<line x1="159.0" y1="440.0" x2="159.0" y2="446.0" stroke="black"/>
+<text x="159.0" y="462.0" text-anchor="middle">46.82</text>
+<line x1="238.0" y1="440.0" x2="238.0" y2="446.0" stroke="black"/>
+<text x="238.0" y="462.0" text-anchor="middle">48.84</text>
+<line x1="317.0" y1="440.0" x2="317.0" y2="446.0" stroke="black"/>
+<text x="317.0" y="462.0" text-anchor="middle">50.86</text>
+<line x1="396.0" y1="440.0" x2="396.0" y2="446.0" stroke="black"/>
+<text x="396.0" y="462.0" text-anchor="middle">52.88</text>
+<line x1="475.0" y1="440.0" x2="475.0" y2="446.0" stroke="black"/>
+<text x="475.0" y="462.0" text-anchor="middle">54.90</text>
+<line x1="554.0" y1="440.0" x2="554.0" y2="446.0" stroke="black"/>
+<text x="554.0" y="462.0" text-anchor="middle">56.92</text>
+<line x1="633.0" y1="440.0" x2="633.0" y2="446.0" stroke="black"/>
+<text x="633.0" y="462.0" text-anchor="middle">58.94</text>
+<line x1="712.0" y1="440.0" x2="712.0" y2="446.0" stroke="black"/>
+<text x="712.0" y="462.0" text-anchor="middle">60.97</text>
+<line x1="791.0" y1="440.0" x2="791.0" y2="446.0" stroke="black"/>
+<text x="791.0" y="462.0" text-anchor="middle">62.99</text>
+<line x1="870.0" y1="440.0" x2="870.0" y2="446.0" stroke="black"/>
+<text x="870.0" y="462.0" text-anchor="middle">65.01</text>
+<text x="450" y="500" text-anchor="middle" fill="#555555">20 classes de largeur 1.011</text>
+</svg>
