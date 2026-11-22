@@ -69,3 +69,28 @@ endforeach ()
 # parties suivantes du projet : chaque fichier, fourni plus tard, déclare ses cibles et leurs réglages
 include(cmake/partie2.cmake OPTIONAL)
 include(cmake/partie3.cmake OPTIONAL)
+
+# Soutenance - Parties 1, 2 et 3
+add_executable(soutenance
+        src/main_soutenance.c
+        src/arbre.c include/arbre.h
+        src/queue.c include/queue.h
+        src/croissance.c include/croissance.h
+        src/croissance_step.c include/croissance_step.h
+        src/sauver_arbre.c include/sauver_arbre.h
+        src/arbre_foret.c include/arbre_foret.h
+        src/croissance_lumiere.c include/croissance_lumiere.h
+        src/foret.c include/foret.h
+        src/sauver_foret.c include/sauver_foret.h
+        src/campagne.c include/campagne.h
+        src/statistiques.c include/statistiques.h
+        utils/src/arbres_utils.c utils/include/arbres_utils.h
+        utils/src/dessin.c utils/include/dessin.h
+        utils/src/alea.c utils/include/alea.h)
+
+target_include_directories(soutenance PRIVATE include utils/include)
+target_compile_options(soutenance PRIVATE -Wall -Wextra)
+
+if (NOT MSVC)
+    target_link_libraries(soutenance PRIVATE m)
+endif ()
