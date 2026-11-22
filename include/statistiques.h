@@ -85,6 +85,7 @@ void displaySummary(double v[], int n);
  */
 void histoToSVG(int effectifs[], int nb_classes, double min, double largeur, const char *titre, const char *nom_fichier);
 
+
 /* ---------------------------------------------------------------- à compléter : vos prototypes, à partir d'ici */
 
 int *computeHistogram(double v[], int n, int nb_classes, double *p_min, double *p_largeur);
