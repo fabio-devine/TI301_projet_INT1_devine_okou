@@ -299,3 +299,61 @@ void histoToSVG(int effectifs[], int nb_classes, double min, double largeur, con
 }
 
 /* ---------------------------------------------------------------- à compléter : vos fonctions, à partir d'ici */
+
+int *computeHistogram(double v[], int n, int nb_classes, double *p_min, double *p_largeur) {
+    if (n <= 0 || nb_classes <= 0) {
+        return NULL;
+    }
+    double min = v[0];
+    double max = v[0];
+    for (int i = 1; i < n; i++) {
+        if (v[i] < min) {
+            min = v[i];
+        }
+        if (v[i] > max) {
+            max = v[i];
+        }
+    }
+    *p_min = min;
+    *p_largeur = (max - min) / nb_classes;
+    int *effectifs = calloc(nb_classes, sizeof(int));
+    if (effectifs == NULL) {
+        perror("computeHistogram");
+        exit(EXIT_FAILURE);
+    }
+    for (int i = 0; i < n; i++) {
+        int classe = 0;
+        if (*p_largeur > 0) {
+            classe = (int) ((v[i] - min) / *p_largeur);
+            if (classe >= nb_classes) {
+                classe = nb_classes - 1;
+            }
+        }
+        effectifs[classe]++;
+    }
+    return effectifs;
+}
+
+
+void displayHistogram(int effectifs[], int nb_classes, double min, double largeur) {
+    int max = 0;
+    for (int i = 0; i < nb_classes; i++) {
+        if (effectifs[i] > max) {
+            max = effectifs[i];
+        }
+    }
+    for (int i = 0; i < nb_classes; i++) {
+        double debut = min + i * largeur;
+        double fin = debut + largeur;
+        char borne = i == nb_classes - 1 ? ']' : '[';
+        int nb = 0;
+        if (max > 0) {
+            nb = (int) round(50.0 * effectifs[i] / max);
+        }
+        printf("[ %7.3f ; %7.3f%c %4d ", debut, fin, borne, effectifs[i]);
+        for (int j = 0; j < nb; j++) {
+            printf("#");
+        }
+        printf("\n");
+    }
+}
