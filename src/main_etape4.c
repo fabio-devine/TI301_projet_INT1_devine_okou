@@ -1,62 +1,88 @@
-/* main_etape4.c : étape 4, sauvez les arbres !
-   écrire un arbre dans un fichier avec saveTree, le comparer aux fichiers fournis, puis le relire avec readTree */
+
+/* main_p2_etape4.c : partie 2, tests de l'étape 4 (cible CMake p2_etape_4) — code fourni
+   colonnes et rangées ; occupation de l'arbre exemple1.txt seul dans une forêt de 10 colonnes et 8 rangées */
 
 #include <stdio.h>
-#include "arbre.h"
+#include <stdlib.h>
+#include "foret.h"
 #include "arbres_utils.h"
-#include "croissance.h"
-#include "sauver_arbre.h"
 
-/* renvoie 1 si les deux fichiers texte ont le même contenu (fins de ligne Windows ou Unix ignorées), 0 sinon */
-static int sameText(const char *nom1, const char *nom2)
-{
-    FILE *f1 = fopen(nom1, "rb");
-    FILE *f2 = fopen(nom2, "rb");
-    int c1 = 0, c2 = 0;
-
-    if (f1 != NULL && f2 != NULL)
-    {
-        do
-        {
-            do { c1 = fgetc(f1); } while (c1 == '\r');
-            do { c2 = fgetc(f2); } while (c2 == '\r');
-        } while (c1 == c2 && c1 != EOF);
+/***
+ * @brief affiche la grille d'occupation, la rangée la plus haute en premier
+ * @param f : la forêt
+ */
+static void displayOccupation(t_foret *f) {
+    for (int r = f->HMAX - 1; r >= 0; r--) {
+        printf("  rangée %d :", r);
+        for (int c = 0; c < f->C; c++) {
+            printf(" %d", f->occupation[r][c]);
+        }
+        printf("\n");
     }
-    if (f1 != NULL) fclose(f1);
-    if (f2 != NULL) fclose(f2);
-    return f1 != NULL && f2 != NULL && c1 == c2;
+    return;
 }
 
-int main(void)
-{
-    t_arbre a, b;
+/***
+ * @brief libère les tableaux d'une forêt dont les arbres n'ont pas été plantés (test seulement)
+ * @param f : la forêt
+ */
+static void freeArrays(t_foret *f) {
+    free(f->arbres);
+    for (int r = 0; r < f->HMAX; r++) {
+        free(f->occupation[r]);
+        free(f->lumiere[r]);
+    }
+    free(f->occupation);
+    free(f->lumiere);
+    return;
+}
 
-    // 1. graine 5, 3 saisons : le fichier écrit doit être identique à data/arbre_petit.txt
-    a = createTree(0, 1, 5);
-    growTree(&a, 3);
-    saveTree(a, "output/etape4_petit.txt");
-    printf("graine 5, 3 saisons : identique a data/arbre_petit.txt ? %s\n",
-           sameText("output/etape4_petit.txt", "data/arbre_petit.txt") ? "oui" : "NON");
+int main(void) {
+    t_foret f = createForest(3, 4, 160, 0.25, 20000);
+    t_foret g;
+    int somme = 0;
 
-    // 2. le fichier écrit doit pouvoir être relu par readTree, et redonner le même arbre
-    b = readTree("output/etape4_petit.txt");
-    printf("arbre sauve :\n");
-    displayTree(a);
-    printf("arbre relu :\n");
-    displayTree(b);
-    printf("\n");
+    // la forêt de l'exemple : 12 colonnes
+    printf("columnOf 6.4 : %d, 11.99 : %d, 12.3 : %d, -0.5 : %d ; rowOf 2.7 : %d, 163.2 : %d\n",
+           columnOf(&f, 6.4f), columnOf(&f, 11.99f), columnOf(&f, 12.3f), columnOf(&f, -0.5f), rowOf(&f, 2.7f), rowOf(&f, 163.2f));
+    printf("attendu :      6           11           0           11            2              159\n");
+    freeArrays(&f);
 
-    // 3. graine 3, 8 saisons et graine 4, 30 saisons
-    a = createTree(0, 1, 3);
-    growTree(&a, 8);
-    saveTree(a, "output/etape4_moyen.txt");
-    printf("graine 3, 8 saisons : identique a data/arbre_moyen.txt ? %s\n",
-           sameText("output/etape4_moyen.txt", "data/arbre_moyen.txt") ? "oui" : "NON");
-    a = createTree(0, 1, 4);
-    growTree(&a, 30);
-    saveTree(a, "output/etape4_grand.txt");
-    printf("graine 4, 30 saisons : identique a data/arbre_grand.txt ? %s\n",
-           sameText("output/etape4_grand.txt", "data/arbre_grand.txt") ? "oui" : "NON");
+    // exemple1.txt dans une forêt de 1 arbre, 10 colonnes, 8 rangées (seul le champ step.arbre est rempli)
+    g = createForest(1, 10, 8, 0.5, 20000);
+    g.arbres[0].step.arbre = readTree("data/exemple1.txt");
+    addTreeToGrid(&g, g.arbres[0].step.arbre.pied);
+    displayOccupation(&g);
+
+    for (int r = 0; r < g.HMAX; r++) {
+        for (int c = 0; c < g.C; c++) {
+            somme += g.occupation[r][c];
+        }
+    }
+    printf("somme des compteurs : %d (attendu : 10) ; attendu, colonnes 3 4 5 : rangée 4 : 0 1 1 ; 3 : 0 1 0 ; 2 : 0 3 1 ; 1 : 2 1 0\n", somme);
+    freeBranches(g.arbres[0].step.arbre.pied);
+    freeArrays(&g);
+
+    // tests supplémentaires
+    t_foret h = createForest(1, 10, 8, 0.5, 20000);
+    t_rameau *r1 = createBranch(-0.5f, 12.2f, 0, 1, 0, 0, 0);
+    t_rameau *r2 = createBranch(10.3f, 12.2f, 0, 1, 0, 0, 1);
+    t_rameau *r3 = createBranch(3.6f, 2.9f, 0, 1, 0, 0, 2);
+
+    addToGrid(&h, r1);
+    addToGrid(&h, r2);
+    addToGrid(&h, r3);
+
+    printf("Tests manuels : %s\n",
+           h.occupation[7][9] == 1 &&
+           h.occupation[7][0] == 1 &&
+           h.occupation[2][3] == 1 ? "OK" : "ECHEC");
+
+    free(r1);
+    free(r2);
+    free(r3);
+    freeArrays(&h);
 
     return 0;
 }
+
