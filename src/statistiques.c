@@ -170,7 +170,6 @@ double computeSkewness(double v[], int n)
         }
         res = somme / (n * s * s * s);
     }
-
     return res;
 }
 
@@ -357,3 +356,5 @@ void displayHistogram(int effectifs[], int nb_classes, double min, double largeu
         printf("\n");
     }
 }
+
+
